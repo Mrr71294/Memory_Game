@@ -1,5 +1,5 @@
 .test{
-  background: #eee;
+  background: white;
   border-style: solid;
   border-width: 2px;
   border-color: red;
@@ -72,18 +72,19 @@ html, body, .container{
 	z-index: 2;
 	/* for firefox 31 */
 	transform: rotateY(0deg);
-  background-color: red
+  background-color: #FFFFFF
 }
 
 /* back, initially hidden pane */
 .back {
-	transform: rotateY(180deg);
-  background-color: blue
+  background-color: blue;
+  transform: rotateY(180deg)
 
 }
 img {
-    max-width: 100%;
     max-height: 100%;
+    max-width: 100%;
+    object-fit: cover;
 }
 .flip-container.flip .flipper {
 	transform: rotateY(180deg);
