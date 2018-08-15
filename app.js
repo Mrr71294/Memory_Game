@@ -184,6 +184,7 @@ function restartGame(){
 //Initiate first "Timer" and allow cards to be flipped .
 function startTimer(){
   $("#timer").TimeCircles().start();
+  $('#start-button').hide();
   listenForCardFlip();
 }
 
