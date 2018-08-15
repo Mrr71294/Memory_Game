@@ -72,10 +72,11 @@ function listenForCardFlip(){
     if (canSelectCard === false) {
       return;
     }
-    //if the selected card ID is already in the selected" queue, empty the queues.
+    //if the selected card ID is already in the selected" queue, empty the queues & flip back over.
     if (selectedCardsID[0] === $(this).attr('id')) {
         selectedCardsClass = [];
         selectedCardsID =[];
+        $(this).toggleClass("flip");
         return;
     }
     //flip selected card and push its Id and Class to respective queue.
@@ -117,7 +118,6 @@ function flipCardsBackDown(){
     selectedCardsClass = [];
     canSelectCard = true;
   }, 550);
-  checkIfAllCardsCorrect();
 }
 
 //If selected pair is correct, update the score, empty queue, & disable pair. If they dont match, flip them back down.
@@ -129,6 +129,7 @@ function checkSelectedCards(){
       pairsCorrect += 1;
       $('.odometer').html(score);
       disableCorrectCards();
+      checkIfAllCardsCorrect();
     }
     else {
       flipCardsBackDown();
