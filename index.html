@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Memory Game</title>
+    <link rel="stylesheet" href="odometer/themes/odometer-theme-car.css" />
+    <link href="TimeCircles/inc/TimeCircles.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -13,29 +15,49 @@
       </div>
       <!-- Settings Row//////////////////////////////////////////////////////////////////// -->
       <div class="settings-row">
-        <div class="test">Hello</div>
-        <div class="test">Lorem
-
-        </div>
-        <div class="test">Hello</div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
       </div>
       <!-- Card Row//////////////////////////////////////////////////////////////////// -->
       <div class="cards-row">
-        <div class="test">Hello</div>
-        <div class="test" id="cards-container">
-
+        <div class="score-column">
+          <div class="test" id="timer" data-timer="60"></div>
+          <div class="test">
+            <h3 style="margin:0">SCORE:</h3>
+          </div>
+          <div class="test odometer" id="score-board"></div>
+          <div class="test"></div>
         </div>
-        <div class="test">Hello</div>
+        <div class="test" id="cards-container">
+        </div>
+        <div class="start-column">
+          <div class="start-column">
+            <button type="button" id="start-button" class="start-column">Start Game!</button>
+          </div>
+          <div id="popUp">
+            <div id="results">
+              <span>Results</span>
+            </div>
+            <div id="memory-score">
+              <span>Memory Score:</span>
+              <p id="score"></p>
+            </div>
+            <div id="pairs-correct">
+              <span>Pairs Guesses Correctly:</span>
+              <p id="correct-pairs"></p>
+            </div>
+            <button type="button" id="try-again">Try Again?</button>
+          </div>
+        </div>
+        <div id="overlay"></div>
       </div>
       <!-- Footer Row//////////////////////////////////////////////////////////////////// -->
       <div class="footer-row">
-        <div class="test">Hello</div>
-        <div class="test">Lorem
-
-        </div>
-        <div class="test">Hello</div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
       </div>
-
   </div>
 
   <script
@@ -43,6 +65,8 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
+  <script src="odometer/odometer.js"></script>
+  <script type="text/javascript" src="TimeCircles/inc/TimeCircles.js"></script>
   <script src="app.js"></script>
   </body>
 </html>

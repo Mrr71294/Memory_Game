@@ -1,7 +1,7 @@
 var score = 0;
 var pairsCorrect = 0;
-var selectedCards = [];
-var faceUpCards = [];
+var selectedCardsClass = [];
+var selectedCardsID = [];
 var canSelectCard = true;
 var cards = [
     { name:"cpp",        img:"cpp-logo.png",        instance:"1" },
@@ -30,7 +30,25 @@ var cards = [
     { name:"react",      img:"react-logo.png",      instance:"2" },
   ];
 
-//A function for to shuffle an array////////////////////////////////////////////
+  //Function that takes in an array of cards and turns it into html to be injected/
+function displayCards(cardsArray){
+  let html = '';
+  cardsArray.forEach(function(card){
+    html += '<div class="flip-container ' + card.name + '" id="' + card.name + card.instance + '">';
+    html += '<div class="flipper">';
+    html += '<div class="front">';
+    html += '<img class="img" src="images/card-back.png" alt="Front of card">';
+    html += '</div>';
+    html += '<div class="back">';
+    html += '<img src="images/' + card.img + '" alt="' + card.name + '">';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+  });
+  $("#cards-container").html(html);
+}
+
+//A function to shuffle an array///////////////////////////////////////////////
 function shuffle(array) {
   var i = 0 , j = 0 , temp = null;
 
@@ -46,62 +64,71 @@ function shuffleCards(cardsArray){
   shuffle(cards);
 }
 
-//Function that takes in an array of cards and turns it into html to be injected/
-function displayCards(cardsArray){
-  let html = '';
-  cardsArray.forEach(function(card){
-    html += '<div class="flip-container ' + card.name + '" id="' + card.name + card.instance + '">';
-    html += '<div class="flipper">';
-    html += '<div class="front">';
-    html += '<img src="images/' + card.img + '" alt="' + card.name + '">';
-    html += '</div>';
-    html += '<div class="back">';
-    html += '<img src="images/card-back.png" alt="Back of card">';
-    html += '</div>';
-    html += '</div>';
-    html += '</div>';
-  });
-  $("#cards-container").html(html);
-}
 
 //Event Listner to turn cards when clicked.//
 function listenForCardFlip(){
   $(".flip-container").click(function(){
+    //if you cant select card, end function.
     if (canSelectCard === false) {
       return;
     }
-
-    $(this).toggleClass("flip");
-    if (faceUpCards[0] === $(this).attr('id')) {
-        selectedCards = [];
-        faceUpCards =[];
+    //if the selected card ID is already in the selected" queue, empty the queues.
+    if (selectedCardsID[0] === $(this).attr('id')) {
+        selectedCardsClass = [];
+        selectedCardsID =[];
         return;
     }
-    selectedCards.push($(this).attr('class').split(' ')[1]);
-    faceUpCards.push($(this).attr('id'));
+    //flip selected card and push its Id and Class to respective queue.
+    $(this).toggleClass("flip");
+    selectedCardsClass.push($(this).attr('class').split(' ')[1]);
+    selectedCardsID.push($(this).attr('id'));
     checkSelectedCards();
   });
 }
 
-//Function that filps the cards in the cardsUp array back down after a time out.//
-function flipCardsBackDown(){
-  setTimeout(function(){
-    $("#" + faceUpCards[0] + "").toggleClass("flip");
-    $("#" + faceUpCards[1] + "").toggleClass("flip");
-    faceUpCards = [];
-    selectedCards = [];
-    canSelectCard = true;
-  }, 750);
+//Change correct pairs "front" card to "complete" img, disable its event listner, and flip them back down.
+function disableCorrectCards(){
+  $("#" + selectedCardsID[0] + " > .flipper > .front > .img").attr('src','images/done-card-back.png');
+  $("#" + selectedCardsID[1] + " > .flipper > .front > .img").attr('src','images/done-card-back.png');
+  $("#" + selectedCardsID[0] + "").off('click');
+  $("#" + selectedCardsID[1] + "").off('click');
+  flipCardsBackDown();
 }
 
-//Function that checks if both selected cards are correct or not, calls flipCardsBackDown when done.//
+//Checks if all 12 pairs have been flipped and resets cards if true.
+function checkIfAllCardsCorrect(){
+  //Avoids 0 % 12 === 0.
+  if(pairsCorrect === 0){
+    return;
+  }
+  else if(pairsCorrect % 12 === 0){
+    setTimeout(function(){
+      resetCards();
+    }, 900);
+  }
+}
+
+//Flips selected pair back down and empties selection queue after a moment to view them.
+function flipCardsBackDown(){
+  setTimeout(function(){
+    $("#" + selectedCardsID[0] + "").toggleClass("flip");
+    $("#" + selectedCardsID[1] + "").toggleClass("flip");
+    selectedCardsID = [];
+    selectedCardsClass = [];
+    canSelectCard = true;
+  }, 550);
+  checkIfAllCardsCorrect();
+}
+
+//If selected pair is correct, update the score, empty queue, & disable pair. If they dont match, flip them back down.
 function checkSelectedCards(){
-  if (selectedCards.length === 2) {
+  if (selectedCardsClass.length === 2) {
     canSelectCard = false;
-    if (selectedCards[0] === selectedCards[1]) {
+    if (selectedCardsClass[0] === selectedCardsClass[1]) {
+      score += 1234;
       pairsCorrect += 1;
-      console.log("Pairs Correct:" + pairsCorrect);
-      flipCardsBackDown();
+      $('.odometer').html(score);
+      disableCorrectCards();
     }
     else {
       flipCardsBackDown();
@@ -109,14 +136,61 @@ function checkSelectedCards(){
   }
 }
 
-//Event Listner to turn ALL cards when clicked.//
-$(".header").click(function(){
-    console.log("hello!!!!");
-    $(".flip-container").toggleClass("flip");
+//Inject score and pairs results into "Results popup".
+function displayScore(){
+  $("#score").html(score);
+  $("#correct-pairs").html(pairsCorrect);
+}
+
+//When timer reaches zero, display "results popup" & enable overlay to focus results.
+function countdownComplete(unit, value, total){
+	if(total<=0){
+    displayScore();
+    $('#popUp').fadeIn('slow');
+    $('#overlay').css('display', 'block');
+	}
+}
+
+//Shuffles & resets all cards without effect score and current timer.
+function resetCards(){
+  selectedCardsClass = [];
+  selectedCardsID = [];
+  canSelectCard = true;
+  shuffleCards(cards);
+  displayCards(cards);
+  listenForCardFlip();
+}
+
+//Resets the whole game(timer, cards, scores).
+function restartGame(){
+  score = 0;
+  pairsCorrect = 0;
+  selectedCardsClass = [];
+  selectedCardsID = [];
+  canSelectCard = true;
+  shuffleCards(cards);
+  displayCards(cards);
+  listenForCardFlip();
+  $('.odometer').html(score);
+  $('#popUp').hide();
+  $("#timer").TimeCircles().restart();
+  $('#overlay').css('display', 'none');
+  $("#try-again").click(function(){
+    restartGame();
+  });
+}
+
+//Start Game and initiate first "Timer".
+function startGame(){
+  restartGame();
+  $("#timer").TimeCircles({count_past_zero: false}).addListener(countdownComplete);
+  $("#timer").TimeCircles().stop();
+}
+
+//Start Initial Timer :)
+$('#start-button').click(function(){
+  $("#timer").TimeCircles().start();
 });
 
 
-
-// shuffleCards(cards);
-displayCards(cards);
-listenForCardFlip();
+startGame();
