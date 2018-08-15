@@ -30,7 +30,7 @@ var cards = [
     { name:"react",      img:"react-logo.png",      instance:"2" },
   ];
 
-  //Function that takes in an array of cards and turns it into html to be injected/
+//Function that takes in an array of cards and turns it into html to be injected/
 function displayCards(cardsArray){
   let html = '';
   cardsArray.forEach(function(card){
@@ -181,17 +181,29 @@ function restartGame(){
   });
 }
 
-//Start Game and initiate first "Timer".
-function startGame(){
-  restartGame();
-  $("#timer").TimeCircles({count_past_zero: false}).addListener(countdownComplete);
-  $("#timer").TimeCircles().stop();
+//Initiate first "Timer" and allow cards to be flipped .
+function startTimer(){
+  $("#timer").TimeCircles().start();
+  listenForCardFlip();
 }
 
-//Start Initial Timer :)
-$('#start-button').click(function(){
-  $("#timer").TimeCircles().start();
-});
 
+//Set evrything up and start event listners.
+function startGame(){
+  shuffleCards(cards);
+  displayCards(cards);
+  $('.odometer').html(score);
+  $('#popUp').hide();
+  $("#timer").TimeCircles({count_past_zero: false}).addListener(countdownComplete);
+  $("#timer").TimeCircles().stop();
+  $('#overlay').css('display', 'none');
+  $("#try-again").click(function(){
+    restartGame();
+  });
+  $('#start-button').click(function(){
+    startTimer();
+  });
+}
 
+//Start the game! :D
 startGame();
