@@ -14,8 +14,10 @@
         <h1>Memory Game</h1>
       </div>
       <!-- Settings Row//////////////////////////////////////////////////////////////////// -->
-      <div class="settings-row">
-        <div class=""></div>
+      <div class="top-row">
+        <div id="frozen-header-container">
+          <span id="frozen-header">Frozen</span>
+        </div>
         <div class=""></div>
         <div class=""></div>
       </div>
@@ -27,28 +29,54 @@
             <h3>SCORE:</h3>
           </div>
           <div class=" odometer" id="score-board"></div>
-          <div class="start-column">
+          <div id="start-column">
               <button type="button" id="start-button" class="pulse">Start Game!</button>
+          </div>
+          <div id="refresh-column">
+              <button type="button" id="refresh-button" class="pulse">Restart Game?</button>
           </div>
         </div>
         <div id="cards-container">
         </div>
         <div id="results-column">
-          <div id="popUp">
-            <div id="results">
-              <span>Results</span>
+          <div id="results" class="bottom-border resultsPopUp">
+            <span>Results</span>
+          </div>
+          <div class="placeholder"></div>
+          <div id="incorrect-flips-row">
+            <span class="bottom-border"><span class="red">I</span>ncorrect-<span class="blue">F</span>lips:</span>
+            <span id="incorrect-flips">0</span>
+          </div>
+          <div id="star-bounus-header">
+            <span class="bottom-border">Star flip Bonus:</span>
+          </div>
+          <div id="star-row">
+            <div class="star">
+              <img src="images/star.png" alt="star" id="star-30">
+              <span><span class="red">I</span>-<span class="blue">F</span></span>
+              <span>30</span>
             </div>
-            <div id="memory-score">
-              <span>Memory Score:</span>
-              <span id="score"></span>
+            <div class="star">
+              <img src="images/star.png" alt="star" id="star-20">
+              <span><span class="red">I</span>-<span class="blue">F</span></span>
+              <span>20</span>
             </div>
-            <div id="pairs-correct">
-              <span>Pairs Correct:</span>
-              <span id="correct-pairs"></span>
+            <div class="star">
+              <img src="images/star.png" alt="star" id="star-10">
+              <span><span class="red">I</span>-<span class="blue">F</span></span>
+              <span>10</span>
             </div>
-            <div id="try-again-column">
-              <button type="button" id="try-again" class="pulse">Try Again?</button>
-            </div>
+          </div>
+          <div class="placeholder"></div>
+          <div class="placeholder"></div>
+          <div id="pairs-correct-row" class="resultsPopUp">
+            <span class="bottom-border">Pairs Correct:</span>
+            <span id="correct-pairs">0</span>
+          </div>
+          <div id="memory-score-row" class="resultsPopUp">
+            <span class="bottom-border">Memory Score:</span>
+            <p>Star Bouns: +<span id="star-bonus">0</span></p>
+            <span id="memory-score">0</span>
           </div>
         </div>
         <div id="overlay"></div>

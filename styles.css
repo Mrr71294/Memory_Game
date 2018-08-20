@@ -29,7 +29,7 @@ html, body, .container {
   margin: 8px
 }
 
-.settings-row, .cards-row, .footer-row {
+.top-row, .cards-row, .footer-row {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
 }
@@ -114,40 +114,59 @@ img {
   display: grid;
   grid-auto-rows: 1fr 2fr 2fr 6fr;
   background-color: white;
-  border: solid;
-  border-color: black;
 }
 
 #results {
   font-size: 30px;
   text-align: center;
-  border-bottom: solid;
-  border-color: black;
   background-color: #e8a344
 }
 
-#memory-score>span, #pairs-correct>span {
+#memory-score-row >span, #pairs-correct-row >span, #incorrect-flips-row >span {
   font-size: 25px;
   display: block;
   padding-bottom: 15px;
 }
 
-#memory-score, #pairs-correct {
-  border-bottom: solid;
-  border-color: black;
+#memory-score-row, #pairs-correct-row, #incorrect-flips-row, #star-bounus-header {
   padding: 5px;
-  font-size: 30px;
   text-align: center;
 }
 
-#memory-score {
+#memory-score-row {
   background-color: #72abce
 }
-
-#pairs-correct {
-  background-color: #bb4f44
+#memory-score-row > p{
+  margin: 0
 }
 
+
+#pairs-correct-row {
+  background-color: #bb4f44
+}
+#incorrect-flips-row{
+  background-color: white
+}
+#star-row{
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr
+}
+
+#star-bounus-header{
+  background-color: white;
+}
+
+.blue{
+  color: blue
+}
+.red{
+  color: red
+}
+
+.star{
+  text-align: center;
+}
 #overlay {
   position: fixed;
   display: none;
@@ -161,13 +180,32 @@ img {
   z-index: 1;
 }
 
-.start-column {
+#start-column, #refresh-column{
   display: grid;
   grid-auto-rows: 1fr;
   grid-auto-columns: 1fr;
   margin: 6px;
   margin-left: 16px;
 }
+
+#results-column {
+  display: grid;
+  grid-auto-rows: 1fr 4fr 1fr 2.25fr 4fr 4fr;
+  margin-right: 10px;
+  z-index: 3
+}
+#star-bounus-header >span{
+  font-size: 25px
+}
+.bottom-border{
+  border-bottom: solid;
+  border-color: black;
+}
+.black-border{
+  border: solid;
+  border-color: black;
+}
+
 
 button {
   cursor: pointer;
@@ -184,11 +222,15 @@ button {
 #try-again-column {
   display: grid;
   margin: 10px;
-  border-style: none;
 }
 
 #timer {
-  padding-left: 25px;
+  padding-left: 30px;
+  background-image: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
 }
 
 #score-board {
@@ -202,6 +244,16 @@ button {
 #score-header>h3 {
   margin: 0;
 }
+#frozen-header{
+  display: inline;
+  font-size: 25px;
+  color: #3580c7;
+  font-weight: bold;
+  display: none
+}
+#frozen-header-container{
+  text-align: center;
+}
 
 #start-button {
   background: linear-gradient(to bottom right, #b4e391, #61c419, #b4e391);
@@ -210,12 +262,41 @@ button {
   border: solid;
   border-color: black
 }
-
-#results-column {
-  display: grid;
-  grid-auto-columns: 1fr;
-  padding-right: 10px
+#refresh-button {
+  background: linear-gradient(to bottom right, #72abce, #3580c7, #72abce);
+  font-size: 25px;
+  font-weight: bold;
+  border: solid;
+  border-color: black
 }
+
+
+
+
+#incorrect-flips, #memory-score, #correct-pairs{
+  padding-top: 30px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .pulse {
   z-index: 4;
